@@ -1,0 +1,213 @@
+<html>
+<link rel="stylesheet" type="text/css" href="style.css">
+<body>
+	<div id="headWrapper"><h1>Robot Control Terminal</h1></div>
+
+	<div class="wrapper">
+		<div class="updownBtn"><button class="btn" onmousedown="robotMove(1)">Forward</button></div>
+		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(4)">Left</button></div>
+		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(7)">Fire!</button></div>
+		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(2)">Right</button></div>
+		<div class="updownBtn"><button class="btn" onmousedown="robotMove(3)">Reverse</button></div>
+
+		<p class="statustext" id="status">Press a button to control the robot!</p>
+	</div>
+
+<!--	
+	<div class="wrapper">
+		<button class="btn" id="fireBtn" onclick="robotMove(7)">Fire the LED!</button>
+		<p class="statustext" id="fireStatus">Weapon Status: Not Fired</p>
+	</div>
+-->
+
+	<div class="wrapper">
+		<button class="btn" id="irBtn" onclick="robotMove(8)">Activate IR sensor!</button>
+		<p class="statustext" id="irStatus">IR status: --</p>
+		<button class="btn" id="iroffBtn" onclick="robotMove(9)">Disable IR sensor</button>
+	</div>
+
+	<div class="wrapper">
+		<button class="btn" id="obsBtn" onclick="robotMove(6)">Activate obstacle avoidance!</button>
+		<p class="statustext" id="usStatus">Distance: --</p>
+	</div>
+
+	<div class="wrapper">
+		<button class="btn" id="cambtn" onclick="robotMove(5)">Take Photo!</button><img id="camera">
+    </div>
+
+<script type="text/javascript">
+var config = {
+	ultrasonics: false,
+	ir: false
+};
+
+var data = {
+	ultrasonicInterval: null,
+	irInterval: null
+};
+
+function robotResponse() {
+	document.getElementById("status").innerHTML = this.responseText;
+}
+
+function fireLED() {
+	document.getElementById("fireStatus").innerHTML = "Weapon Status: " + this.responseText;
+}
+
+function irResponse() {
+	document.getElementById("irStatus").innerHTML = "IR level: " + this.responseText;
+}
+
+function updateIRResponse() {
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.addEventListener("load", irResponse);
+	httpRequest.open("GET", "/irinput");
+	httpRequest.send();
+}
+
+function ultrasonicResponse() {
+	document.getElementById("usStatus").innerHTML = "Distance: " + this.responseText + " cm";
+}
+
+function updateUltrasonic() {
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.addEventListener("load", ultrasonicResponse);
+	httpRequest.open("GET", "/ultrasonic");
+	httpRequest.send();
+}
+
+function robotMove(direction) {
+	var url;
+	console.log("Direction id = " + direction);
+
+	switch(direction) {
+		case 1:
+		case "Up":
+			url = "/forward";
+			break;
+
+		case 2:
+		case "Right":
+			url = "/right";
+			break;
+
+		case 3:
+		case "Down":
+			url = "/back";
+			break;
+
+		case 4:
+		case "Left":
+			url = "/left";
+			break;
+
+		case 5:
+			document.getElementById("status").innerHTML = "Acquiring image sensor data...";
+			document.getElementById("camera").src = "";
+			document.getElementById("camera").src = "/cheese";
+			break;
+
+		case 6:
+			config.ultrasonics = !config.ultrasonics;
+
+			if (config.ultrasonics) {
+				data.ultrasonicInterval = setInterval(updateUltrasonic, 2000);
+			} else {
+				clearInterval(data.ultrasonicInterval);
+				data.ultrasonicInterval = null;
+			}
+			break;
+
+		case 7:
+			url = "/fireLED";
+			break;
+
+		case 8:
+			config.ir = !config.ir;
+
+			if (config.ir) {
+				data.irInterval = setInterval(updateIRResponse, 2000);
+			} else {
+				clearInterval(data.irInterval);
+				data.irInterval = null;
+			}	
+			break;			
+
+		case 9:
+			config.ir = false;
+			clearInterval(data.irInterval);
+			data.irInterval = null;
+			document.getElementById("irStatus").innerHTML = "IR off";
+
+			break;
+
+	}
+
+	if (url) {
+		var oReq = new XMLHttpRequest();
+		oReq.addEventListener("load", robotResponse);
+		oReq.open("GET", url);
+		oReq.send();
+	}
+
+}
+
+function keyEvent(e) {
+	var url;
+	console.log("Key pressed id = " + e.key);
+
+	switch(e.key) {
+		case "ArrowLeft":
+		case "Left":
+			url = "/left";
+			break;
+
+		case "ArrowRight":
+		case "Right":
+			url = "/right";
+			break;
+
+		case "ArrowUp":
+		case "Up":
+			url = "/forward";
+			break;
+
+		case "ArrowDown":
+		case "Down":
+			url = "/backward";
+			break;
+
+		case "c":
+			document.getElementById("status").innerHTML = "Acquiring image sensor data...";
+			document.getElementById("camera").src = "";
+			document.getElementById("camera").src = "/cheese";
+			break;
+
+		case "u":
+			config.ultrasonics = !config.ultrasonics;
+
+			if (config.ultrasonics) {
+				data.ultrasonicInterval = setInterval(updateUltrasonic, 2000);
+			} else {
+				clearInterval(data.ultrasonicInterval);
+				data.ultrasonicInterval = null;
+			}
+			break;
+		
+		case "f":
+			url = "/fireLED";
+			break;
+	}
+
+	if (url) {
+		var oReq = new XMLHttpRequest();
+		oReq.addEventListener("load", robotResponse);
+		oReq.open("GET", url);
+		oReq.send();
+	}
+}
+
+document.addEventListener("keydown", keyEvent, false);
+</script>
+</body>
+</html>
