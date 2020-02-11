@@ -3,3 +3,5 @@ RPi.GPIO
 spidev
 bottle
 tornado
+py_irsend
+adafruit-circuitpython-ads1x15
