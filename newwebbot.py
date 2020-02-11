@@ -80,6 +80,13 @@ if __name__ == '__main__':
 	log = logging.getLogger(__name__)
 
 	try:
+		robot = CamJamKitRobot()
+		robot.stop()
+	except Exception as e:
+		log.error(e)
+		exit()
+
+	try:
 		app = default_app()
 		app.run(host=args.host, port=args.port, server='tornado')
 	except:
