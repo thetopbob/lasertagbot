@@ -6,43 +6,25 @@
 	<div class="wrapper">
 		<div class="updownBtn"><button class="btn" onmousedown="robotMove(1)">Forward</button></div>
 		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(4)">Left</button></div>
-		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(7)">Fire!</button></div>
+		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(5)">Fire!</button></div>
 		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(2)">Right</button></div>
 		<div class="updownBtn"><button class="btn" onmousedown="robotMove(3)">Reverse</button></div>
 
 		<p class="statustext" id="status">Press a button to control the robot!</p>
 	</div>
 
-<!--	
 	<div class="wrapper">
-		<button class="btn" id="fireBtn" onclick="robotMove(7)">Fire the LED!</button>
-		<p class="statustext" id="fireStatus">Weapon Status: Not Fired</p>
-	</div>
--->
-
-	<div class="wrapper">
-		<button class="btn" id="irBtn" onclick="robotMove(8)">Activate IR sensor!</button>
+		<button class="btn" id="irBtn" onclick="robotMove(6)">Activate IR sensor!</button>
 		<p class="statustext" id="irStatus">IR status: --</p>
-		<button class="btn" id="iroffBtn" onclick="robotMove(9)">Disable IR sensor</button>
-	</div>
-
-	<div class="wrapper">
-		<button class="btn" id="obsBtn" onclick="robotMove(6)">Activate obstacle avoidance!</button>
-		<p class="statustext" id="usStatus">Distance: --</p>
-	</div>
-
-	<div class="wrapper">
-		<button class="btn" id="cambtn" onclick="robotMove(5)">Take Photo!</button><img id="camera">
-    </div>
+		<button class="btn" id="iroffBtn" onclick="robotMove(7)">Disable IR sensor</button>
+	</div>	
 
 <script type="text/javascript">
 var config = {
-	ultrasonics: false,
 	ir: false
 };
 
 var data = {
-	ultrasonicInterval: null,
 	irInterval: null
 };
 
@@ -65,16 +47,6 @@ function updateIRResponse() {
 	httpRequest.send();
 }
 
-function ultrasonicResponse() {
-	document.getElementById("usStatus").innerHTML = "Distance: " + this.responseText + " cm";
-}
-
-function updateUltrasonic() {
-	var httpRequest = new XMLHttpRequest();
-	httpRequest.addEventListener("load", ultrasonicResponse);
-	httpRequest.open("GET", "/ultrasonic");
-	httpRequest.send();
-}
 
 function robotMove(direction) {
 	var url;
@@ -102,27 +74,10 @@ function robotMove(direction) {
 			break;
 
 		case 5:
-			document.getElementById("status").innerHTML = "Acquiring image sensor data...";
-			document.getElementById("camera").src = "";
-			document.getElementById("camera").src = "/cheese";
-			break;
-
-		case 6:
-			config.ultrasonics = !config.ultrasonics;
-
-			if (config.ultrasonics) {
-				data.ultrasonicInterval = setInterval(updateUltrasonic, 2000);
-			} else {
-				clearInterval(data.ultrasonicInterval);
-				data.ultrasonicInterval = null;
-			}
-			break;
-
-		case 7:
 			url = "/fireLED";
 			break;
 
-		case 8:
+		case 6:
 			config.ir = !config.ir;
 
 			if (config.ir) {
@@ -133,7 +88,7 @@ function robotMove(direction) {
 			}	
 			break;			
 
-		case 9:
+		case 7:
 			config.ir = false;
 			clearInterval(data.irInterval);
 			data.irInterval = null;
@@ -177,23 +132,6 @@ function keyEvent(e) {
 			url = "/backward";
 			break;
 
-		case "c":
-			document.getElementById("status").innerHTML = "Acquiring image sensor data...";
-			document.getElementById("camera").src = "";
-			document.getElementById("camera").src = "/cheese";
-			break;
-
-		case "u":
-			config.ultrasonics = !config.ultrasonics;
-
-			if (config.ultrasonics) {
-				data.ultrasonicInterval = setInterval(updateUltrasonic, 2000);
-			} else {
-				clearInterval(data.ultrasonicInterval);
-				data.ultrasonicInterval = null;
-			}
-			break;
-		
 		case "f":
 			url = "/fireLED";
 			break;
