@@ -3,17 +3,17 @@
 This application enables robots with the right equipment to paticipate in a game of Laser Tag!
 
 ## Kit
-Main Kit
+### Main Kit
  - [Raspberry Pi](https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero)
  - Wi-Fi connection (Built into the Raspberry Pi Zero)
  - Power (requirements TBC)
-Weapons Subsystem
+### Weapons Subsystem
  - ADS1115 (Analogue converter to receive IR input)
  - IR receiver (x2)
  - IR LED (any IR LED will do)
-Control Subsytem
+### Control Subsytem
  - Requirements TBC
-Drive Subsystem
+### Drive Subsystem
  - L293D H bridge motor driver
  - DC Motors (x2)
 
