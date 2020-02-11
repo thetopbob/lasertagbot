@@ -1,32 +1,12 @@
 #!/usr/bin/env python3
 
-##
-# webbot - A browser controlled robot! Your little frIEnd.
-##
-# Copyright (c) 2016 PiCymru
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 import os, logging, subprocess, time, argparse
 from py_irsend import irsend # module required for sending IR signal
 from bottle import route, request, response, redirect, hook, error, default_app, view, static_file, template, HTTPError
-from gpiozero import CamJamKitRobot, DistanceSensor, LineSensor
-
+from gpiozero import CamJamKitRobot
 import board
 import busio
+
 i2c = busio.I2C(board.SCL, board.SDA)
 
 import adafruit_ads1x15.ads1115 as ADS
@@ -70,20 +50,8 @@ def irinput():
 
 @route('/fireLED')
 def fireLED():
-	irsend.send_once('xbox', ['DISPLAY'])
+	irsend.send_once('Samsung_BN59-00516A_TV', ['KEY_POWER'])
 	return "WEAPON FIRED!"
-
-@route('/ultrasonic')
-def ultrasonic():
-	return "{:.2f}".format(sensor.distance)
-
-@route('/cheese')
-def cheese():
-	response.content_type = 'image/jpeg'
-	response.cache_control = 'no-store'
-	with subprocess.Popen(["raspistill", "-w", "400", "-h", "300", "-o", "-"], stdout=subprocess.PIPE) as proc:
-		return proc.stdout.read()
-	return run_output.stdout
 
 @route('/')
 def index():
@@ -101,10 +69,6 @@ if __name__ == '__main__':
 	parser.add_argument("-i", "--host", default=os.getenv('IP', '127.0.0.1'), help="IP Address")
 	parser.add_argument("-p", "--port", default=os.getenv('PORT', 5000), help="Port")
 
-	# Additional hardware
-	parser.add_argument("--distance-sensor", help="enable distance sensor", default=False, action="store_true")
-	parser.add_argument("--line-sensor", help="enable line sensor", default=False, action="store_true")
-
 	# Verbose mode
 	parser.add_argument("--verbose", "-v", help="increase output verbosity", action="store_true")
 	args = parser.parse_args()
@@ -114,17 +78,6 @@ if __name__ == '__main__':
 	else:
 		logging.basicConfig(level=logging.INFO)
 	log = logging.getLogger(__name__)
-
-	try:
-		robot = CamJamKitRobot()
-		if args.distance_sensor:
-			distance_sensor = DistanceSensor(18, 17)
-		if args.line_sensor:
-			line_sensor = LineSensor(4)
-		robot.stop()
-	except Exception as e:
-		log.error(e)
-		exit()
 
 	try:
 		app = default_app()
