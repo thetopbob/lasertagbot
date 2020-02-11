@@ -1,23 +1,25 @@
 <html>
 <link rel="stylesheet" type="text/css" href="style.css">
 <body>
-	<div id="headWrapper"><h1>Robot Control Terminal</h1></div>
+        <div id="headWrapper"><h1>Robot Control Terminal</h1></div>
 
-	<div class="wrapper">
-		<div class="updownBtn"><button class="btn" onmousedown="robotMove(1)">Forward</button></div>
-		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(4)">Left</button></div>
-		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(5)">Fire!</button></div>
-		<div class="leftrightBtn"><button class="btn" onmousedown="robotMove(2)">Right</button></div>
-		<div class="updownBtn"><button class="btn" onmousedown="robotMove(3)">Reverse</button></div>
+        <div class="wrapper">
+                <p class="statustext" id="lefthitstatus">Left Sensor Status: --</p>
+                <div class="updownBtn"><button class="btn" onmousedown="robotMove(1)">Forward</button></div>
+                <p class="statustext" id="righthitstatus">Right Sensor Status: --</p>
+                <div class="leftrightBtn"><button class="btn" onmousedown="robotMove(4)">Left</button></div>
+                <div class="leftrightBtn"><button class="btn" onmousedown="robotMove(5)">Fire!</button></div>
+                <div class="leftrightBtn"><button class="btn" onmousedown="robotMove(2)">Right</button></div>
+                <div class="updownBtn"><button class="btn" onmousedown="robotMove(3)">Reverse</button></div>
 
-		<p class="statustext" id="status">Press a button to control the robot!</p>
-	</div>
+                <p class="statustext" id="status">Press a button to control the robot!</p>
+        </div>
 
-	<div class="wrapper">
-		<button class="btn" id="irBtn" onclick="robotMove(6)">Activate IR sensor!</button>
-		<p class="statustext" id="irStatus">IR status: --</p>
-		<button class="btn" id="iroffBtn" onclick="robotMove(7)">Disable IR sensor</button>
-	</div>	
+        <div class="wrapper">
+                <button class="btn" id="irBtn" onclick="robotMove(6)">Activate IR sensor!</button>
+                <p class="statustext" id="irStatus">IR status: --</p>
+                <button class="btn" id="iroffBtn" onclick="robotMove(7)">Disable IR sensor</button>
+        </div>	
 
 <script type="text/javascript">
 var config = {
