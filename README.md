@@ -14,6 +14,9 @@ This application enables robots with the right equipment to paticipate in a game
  - IR LED (any IR LED will do)
  - PN2222 transistor
  - 100ohm resistor
+ - [Micro Servo](https://thepihut.com/products/9g-micro-servo-1-6kg)
+ - Servo driver possibly the [PCA9685](https://thepihut.com/products/servo-pwm-pizero)
+ - 2.54mm pitch terminal for the above (to supply power)
 ### Control Subsytem
  - Requirements TBC
 ### Drive Subsystem
