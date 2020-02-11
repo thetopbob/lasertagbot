@@ -16,7 +16,6 @@ This application enables robots with the right equipment to paticipate in a game
  - 100ohm resistor
  - [Micro Servo](https://thepihut.com/products/9g-micro-servo-1-6kg)
  - Servo driver possibly this one that has the [PCA9685](https://thepihut.com/products/adafruit-16-channel-12-bit-pwm-servo-driver-i2c-interface-pca9685)
- - 2.54mm pitch terminal for the above (to supply power)
 ### Control Subsytem
  - Requirements TBC
 ### Drive Subsystem
