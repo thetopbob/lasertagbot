@@ -7,10 +7,13 @@ This application enables robots with the right equipment to paticipate in a game
  - [Raspberry Pi](https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero)
  - Wi-Fi connection (Built into the Raspberry Pi Zero)
  - Power (requirements TBC)
+ - Breadboard (for modelling)
 ### Weapons Subsystem
  - ADS1115 (Analogue converter to receive IR input)
  - IR receiver (x2)
  - IR LED (any IR LED will do)
+ - PN2222 transistor
+ - 100ohm resistor
 ### Control Subsytem
  - Requirements TBC
 ### Drive Subsystem
@@ -20,8 +23,8 @@ This application enables robots with the right equipment to paticipate in a game
 ## Installation
 We've made installing everything you need to get started with our browser controlled robot easy!
 
-	git clone 
-	cd webbot
+	git clone https://github.com/thetopbob/lasertagbot.git
+	cd lasertagbot
 	make install
 
 ## Usage
