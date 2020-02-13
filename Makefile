@@ -1,4 +1,4 @@
-NAME := webbot
+NAME := lasertagbot
 
 .PHONY: install
 install:
