@@ -46,7 +46,10 @@ def action_back():
 def irinput():
 	ads = ADS.ADS1115(i2c)
 	chan = AnalogIn(ads, ADS.P0)
-	return "{:.2f}".format(chan.value)
+	if chan.value < 16000:
+		return "I've been hit!"
+	else:
+		return chan.value
 
 @route('/fireLED')
 def fireLED():
