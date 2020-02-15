@@ -48,10 +48,9 @@ def irinput():
 	chan = AnalogIn(ads, ADS.P0)
 	if chan.value < 16000:
 		# return "I've been hit!"
-		return "{:.2f}".format(sensor.distance)
-
+		return "HIT! {:.2f}".format(chan.value)
 	else:
-		return "{:.2f}".format(chan.value)
+		return "No hit {:.2f}".format(chan.value)
 
 
 @route('/fireLED')
