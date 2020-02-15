@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 import os, logging, subprocess, time, argparse
-import tornado.ioloop
-import tornado.web
 from py_irsend import irsend # module required for sending IR signal
 from bottle import route, request, response, redirect, hook, error, default_app, view, static_file, template, HTTPError
 from gpiozero import CamJamKitRobot
@@ -53,7 +51,6 @@ def irinput():
 	else:
 		return "No hit {:5d}".format(chan1.value)
 
-
 @route('/fireLED')
 def fireLED():
 	irsend.send_once('Samsung_BN59-00516A_TV', ['KEY_POWER'])
@@ -66,12 +63,6 @@ def index():
 @route('/style.css')
 def index():
 	return static_file('style.css', root='public')
-
-def default_app():
-    return tornado.web.Application([
-	    (r"/", MainHandler),
-	    (r'/images/(.*)', web.StaticFileHandler, {'path': '/public'}),
-    ])
 
 if __name__ == '__main__':
 	
