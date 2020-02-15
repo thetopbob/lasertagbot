@@ -4,8 +4,9 @@
         <div id="headWrapper"><h1>Robot Control Terminal</h1></div>
 
         <div class="wrapper">
-                <div class="leftrightBtn"><button class="btn" name="IRstatusleft">Left Sensor</button></div>
-		<div class="leftrightBtn"><button class="btn" name="IRstatusright">Right Sensor</button></div>
+                <!-- <div class="leftrightBtn"><button class="btn" name="IRstatusleft">Left Sensor</button></div>
+		<div class="leftrightBtn"><button class="btn" name="IRstatusright">Right Sensor</button></div> -->
+		<img id="IRleft" src="greenbutton.png" style="width:30px">
                 <div class="updownBtn"><button class="btn" onmousedown="robotMove(1)">Forward</button></div>
                 <div class="leftrightBtn"><button class="btn" onmousedown="robotMove(4)">Left</button></div>
                 <div class="leftrightBtn"><button class="btn" onmousedown="robotMove(5)">Fire!</button></div>
@@ -47,7 +48,6 @@ function updateIRResponse() {
 	httpRequest.addEventListener("load", irResponse);
 	httpRequest.open("GET", "/irinput");
 	httpRequest.send();
-	document.getElementById("IRstatusleft").style.background='orange';
 }
 
 
