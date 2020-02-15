@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import os, logging, subprocess, time, argparse
+import tornado.ioloop
+import tornado.web
 from py_irsend import irsend # module required for sending IR signal
 from bottle import route, request, response, redirect, hook, error, default_app, view, static_file, template, HTTPError
 from gpiozero import CamJamKitRobot
@@ -65,8 +67,14 @@ def index():
 def index():
 	return static_file('style.css', root='public')
 
-if __name__ == '__main__':
+def default_app():
+    return tornado.web.Application([
+	    (r"/", MainHandler),
+	    (r'/images/(.*)', web.StaticFileHandler, {'path': '/public'}),
+    ])
 
+if __name__ == '__main__':
+	
 	parser = argparse.ArgumentParser()
 
 	# Server settings
