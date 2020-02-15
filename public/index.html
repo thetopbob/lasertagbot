@@ -40,7 +40,6 @@ function fireLED() {
 
 function irResponse() {
 	document.getElementById("irStatus").innerHTML = "IR status: " + this.responseText;
-	document.getElementById("IRstatusleft").style.background='#FFA500';
 }
 
 function updateIRResponse() {
@@ -48,6 +47,7 @@ function updateIRResponse() {
 	httpRequest.addEventListener("load", irResponse);
 	httpRequest.open("GET", "/irinput");
 	httpRequest.send();
+	document.getElementById("IRstatusleft").style.background='orange';
 }
 
 
