@@ -45,11 +45,11 @@ def action_back():
 @route('/irinput')
 def irinput():
 	ads = ADS.ADS1115(i2c)
-	chan = AnalogIn(ads, ADS.P0)
-	if chan.value < 16000:
-		return "!!!! I'M HIT !!!! {:5d}".format(chan.value)
+	chan1 = AnalogIn(ads, ADS.P0)
+	if chan1.value < 20000:
+		return "!!!! I'M HIT !!!! {:5d}".format(chan1.value)
 	else:
-		return "No hit {:5d}".format(chan.value)
+		return "No hit {:5d}".format(chan1.value)
 
 
 @route('/fireLED')
