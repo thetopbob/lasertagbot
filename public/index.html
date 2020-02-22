@@ -83,7 +83,7 @@ function robotMove(direction) {
 		case 6:
 			config.ir = !config.ir;
 			if (config.ir) {
-				data.irInterval = setInterval(updateIRResponse, 1000);
+				data.irInterval = setInterval(updateIRResponse, 100);
 			} else {
 				clearInterval(data.irInterval);
 				data.irInterval = null;
